@@ -78,6 +78,7 @@ end
 game.Players.PlayerAdded:Connect(function(plr)
 	
 	if isUserWhitelisted(plr.Name) then
+		print("here")
 		local debounce = true
 		local clone = script.UI:Clone()
 		clone.Parent = plr.PlayerGui
