@@ -36,6 +36,7 @@ function isUserWhitelisted(name)
 				print(req)
 				return game.HttpService:JSONDecode(req.Body).result
 			else
+					print(req)
 				return false
 			end
 		end)
