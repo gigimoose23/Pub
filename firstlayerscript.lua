@@ -40,7 +40,7 @@ function isUserWhitelisted(name)
 		if success then
 			return data
 		else
-		
+			print(data)
 			task.wait(3)
 		end
 	until success or attempts == 5
