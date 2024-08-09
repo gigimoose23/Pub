@@ -4,6 +4,8 @@ task.spawn(function()
 	end
 end)
 
+print("hi")
+
 local GORIG = "projectsigma.littlehostings.com"
 local ORIG = "https://" .. GORIG
 local API_BASE = ORIG .. "/api/"
