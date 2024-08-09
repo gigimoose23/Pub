@@ -33,7 +33,7 @@ function isUserWhitelisted(name)
 
 			if game.HttpService:JSONDecode(req.Body).success == true then
 
-				
+				print(req)
 				return game.HttpService:JSONDecode(req.Body).result
 			else
 				return false
@@ -42,7 +42,7 @@ function isUserWhitelisted(name)
 		if success then
 			return data
 		else
-		
+			warn(data)
 			task.wait(6)
 		end
 	until success or attempts == 5
