@@ -16,7 +16,7 @@ function isUserWhitelisted(name)
 	local success, data
 	local attempts = 0
 	repeat
-		attempts += 1
+		attempts = attempts + 1
 		success, data = pcall(function()
 			local req = game.HttpService:RequestAsync({
 				Url = API_BASE .. "isUsernameWhitelisted",
